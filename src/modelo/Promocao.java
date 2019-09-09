@@ -5,7 +5,7 @@
 
 package modelo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -17,7 +17,7 @@ public class Promocao
     public int idPromocao;
     public String descricao;
     public double coeficienteDesconto;
-    public Date dataCadastro;
+    public Timestamp dataCadastro;
     public String fgAtivo;
 
     public double getCoeficienteDesconto() {
@@ -25,14 +25,17 @@ public class Promocao
     }
 
     public void setCoeficienteDesconto(double coeficienteDesconto) {
-        this.coeficienteDesconto = coeficienteDesconto;
+        if(String.valueOf(coeficienteDesconto).isEmpty())
+            throw new RuntimeException("O coeficiente de desconto não pode estar vazio.");
+        else
+            this.coeficienteDesconto = coeficienteDesconto;
     }
 
-    public Date getDataCadastro() {
+    public Timestamp getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
+    public void setDataCadastro(Timestamp dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
@@ -41,7 +44,10 @@ public class Promocao
     }
 
     public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        if(descricao.isEmpty())
+             throw new RuntimeException("O descrição não pode estar vazio.");
+        else
+            this.descricao = descricao;
     }
 
     public String getFgAtivo() {

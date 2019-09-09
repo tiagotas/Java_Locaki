@@ -11,6 +11,7 @@
 
 package visualizacao;
 import javax.swing.*;
+import visualizacao.Relatorios.*;
 /**
  *
  * @author Tiago
@@ -19,37 +20,27 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     /** Creates new form MenuPrinicipal */
 
-    static MenuPrincipal mp = new MenuPrincipal();
+    public static MenuPrincipal mp = new MenuPrincipal();
 
 
     ////// CLIENTES //////
     CadCliente cc = null;
-    EdiCliente ec = null;
-    RelCliente rc = null;
 
     ////// FILMES //////
     
     CadFilme cf = null;
-    EdiFilme ef = null;
-    RelFilme rf = null;
 
     ////// GENEROS //////
 
     CadGenero cg = null;
-    EdiGenero eg = null;
-    RelGenero rg = null;
 
     ////// PROMOCOES //////
 
     CadPromocao cp = null;
-    EdiPromocao ep = null;
-    RelPromocao rp = null;
 
     ////// LOCACOES //////
 
     CadLocacao cl = null;
-    EdiLocacao el = null;
-    RelLocacao rl = null;
     
 
     public MenuPrincipal() {
@@ -63,7 +54,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
          } catch (Exception e) {
              System.err.println("Não foi possível alterar o LookAndFeel");
              e.printStackTrace();
-         } 
+         }
+
+        //this.setIconImage(new ImageIcon("/visualizacao/Imagens/icon.ico").getImage());
     }
 
     /** This method is called from within the constructor to
@@ -116,7 +109,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         javax.swing.JMenu jMenu14 = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem34 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem33 = new javax.swing.JMenuItem();
-        javax.swing.JMenuItem jMenuItem35 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem1 = new javax.swing.JMenuItem();
         javax.swing.JPopupMenu.Separator jSeparator3 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JMenuItem jMenuItem11 = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenu3 = new javax.swing.JMenu();
@@ -138,7 +131,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         javax.swing.JMenuItem jMenuItem19 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem20 = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenu2 = new javax.swing.JMenu();
-        javax.swing.JMenuItem jMenuItem10 = new javax.swing.JMenuItem();
         javax.swing.JPopupMenu.Separator jSeparator1 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JMenuItem jMenuItem9 = new javax.swing.JMenuItem();
 
@@ -151,7 +143,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Locaki ~ A Sua Locadora!");
         setAlwaysOnTop(true);
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImage(new ImageIcon("/visualizacao/Icones/icon.ico").getImage());
         setMaximizedBounds(new java.awt.Rectangle(50, 50, 0, 0));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -177,7 +171,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jToolBar1.add(jButton4);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/32x32_report_add.png"))); // NOI18N
-        jButton5.setToolTipText("Lançar Nova Locação!\nCtrl+L");
+        jButton5.setToolTipText("Lançar Nova Locação!");
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -292,7 +286,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group.png"))); // NOI18N
         jMenu10.setText("Clientes");
 
-        jMenuItem23.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group_go.png"))); // NOI18N
         jMenuItem23.setText("Relação de Clientes");
         jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
@@ -431,7 +424,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenu14.add(jMenuItem34);
 
-        jMenuItem33.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_add.png"))); // NOI18N
         jMenuItem33.setText("Lançar Locação!");
         jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
@@ -441,14 +433,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenu14.add(jMenuItem33);
 
-        jMenuItem35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_delete.png"))); // NOI18N
-        jMenuItem35.setText("Remover Locação");
-        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_delete.png"))); // NOI18N
+        jMenuItem1.setText("Remover Locação");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem35ActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu14.add(jMenuItem35);
+        jMenu14.add(jMenuItem1);
 
         jMenu1.add(jMenu14);
         jMenu1.add(jSeparator3);
@@ -598,15 +590,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu2.setText("Ajuda");
-
-        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/lightbulb.png"))); // NOI18N
-        jMenuItem10.setText("Dicas...");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem10);
         jMenu2.add(jSeparator1);
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/emotion_wink.png"))); // NOI18N
@@ -634,7 +617,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -642,7 +625,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -676,63 +659,64 @@ public class MenuPrincipal extends javax.swing.JFrame {
             cc = new CadCliente();
 
         cc.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         // TODO add your handling code here:
-        CadCliente cc = new CadCliente();
+        if(cc == null)
+            cc = new CadCliente();
+
         cc.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
         // TODO add your handling code here:
-        EdiCliente ec = new EdiCliente();
+        RelCliente ec = new RelCliente();
         ec.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+       RelCliente rc = new RelCliente();
+       rc.setVisible(true);
     }//GEN-LAST:event_jMenuItem23ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
         // TODO add your handling code here:
-        CadFilme cf = new CadFilme();
+        if(cf == null)
+            cf = new CadFilme();
+
         cf.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem24ActionPerformed
 
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
         // TODO add your handling code here:
 
-        EdiFilme ef = new EdiFilme();
-        ef.setVisible(true);
-        this.setVisible(false);
+         RelFilme rf = new RelFilme();
+         rf.setVisible(true);
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        RelFilme rf = new RelFilme();
+        rf.setVisible(true);
+
     }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
         // TODO add your handling code here:
+        if(cg == null)
+            cg = new CadGenero();
 
-        CadGenero cg = new CadGenero();
         cg.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
         // TODO add your handling code here:
-        EdiGenero eg = new EdiGenero();
-        eg.setVisible(true);
-        this.setVisible(false);
+        RelGenero rg = new RelGenero();
+        rg.setVisible(true);
     }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
@@ -740,127 +724,126 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         RelGenero rg = new RelGenero();
         rg.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         // TODO add your handling code here:
-        CadPromocao cp = new CadPromocao();
+        if(cp == null)
+            cp = new CadPromocao();
+
         cp.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         // TODO add your handling code here:
-        EdiPromocao ep = new EdiPromocao();
-        ep.setVisible(true);
-        this.setVisible(false);
+        RelPromocao rp = new RelPromocao();
+        rp.setVisible(true);
     }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
         RelPromocao rp = new RelPromocao();
         rp.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
         // TODO add your handling code here:
-        CadLocacao cl = new CadLocacao();
-        cl.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem33ActionPerformed
+        if(cl == null)
+            cl = new CadLocacao();
 
-    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
-        // TODO add your handling code here:
-        EdiLocacao el = new EdiLocacao();
-        el.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem35ActionPerformed
+        cl.setVisible(true);
+        cl.resetComponents();
+    }//GEN-LAST:event_jMenuItem33ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        RelLocacao rl = new RelLocacao();
+        rl.setVisible(true);
     }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        ClientesComFilmes ccf = new ClientesComFilmes();
+        ccf.setVisible(true);
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        ClientesMaisAtivos cma = new ClientesMaisAtivos();
+        cma.setVisible(true);
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-
-        this.setVisible(false);
+        ClientesMenosAtivos cma = new ClientesMenosAtivos();
+        cma.setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FilmesMaisProcurados fmp = new FilmesMaisProcurados();
+        fmp.setVisible(true);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FilmesMenosProcurados fmp = new FilmesMenosProcurados();
+        fmp.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FilmesTopDez ftd = new FilmesTopDez();
+        ftd.setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesDevolucoesAtrasadas lda = new LocacoesDevolucoesAtrasadas();
+        lda.setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesFilmesDevolvidosHoje lfdh = new LocacoesFilmesDevolvidosHoje();
+        lfdh.setVisible(true);
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesTotalLocacoesMes ltlm = new LocacoesTotalLocacoesMes();
+        ltlm.setVisible(true);
     }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FinanceiroReceitaPorPeriodo frpp = new FinanceiroReceitaPorPeriodo();
+        frpp.setVisible(true);
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FinanceiroReceitaPorFilme frpf = new FinanceiroReceitaPorFilme ();
+        frpf.setVisible(true);
     }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FinanceiroReceitaPorGenero frpg = new FinanceiroReceitaPorGenero();
+        frpg.setVisible(true);
     }//GEN-LAST:event_jMenuItem20ActionPerformed
-
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -869,7 +852,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             cl = new CadLocacao();
 
         cl.setVisible(true);
-        this.setVisible(false);
+        cl.resetComponents();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -879,7 +862,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
             cf = new CadFilme();
 
         cf.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -889,7 +871,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
             cg = new CadGenero();
 
         cg.setVisible(true);
-        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -903,32 +884,43 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesTotalLocacoesMes ltlm = new LocacoesTotalLocacoesMes();
+        ltlm.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FilmesTopDez ftd = new FilmesTopDez();
+        ftd.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        ClientesComFilmes ccf = new ClientesComFilmes();
+        ccf.setVisible(true);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesFilmesDevolvidosHoje lfdh = new LocacoesFilmesDevolvidosHoje();
+        lfdh.setVisible(true);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesDevolucoesAtrasadas lda = new LocacoesDevolucoesAtrasadas();
+        lda.setVisible(true);
     }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        RelLocacao rl = new RelLocacao();
+        rl.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
     * @param args the command line arguments

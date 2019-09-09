@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class Conexao {
 
     private static String host = "localhost";
-    private static String database = "locaki";
+    private static String database = "LOCAKI";
     private static String usuario = "postgres";
     private static String senha = "";
     private static String url = "jdbc:postgresql://" + host + "/" + database;

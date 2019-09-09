@@ -5,22 +5,25 @@
 
 package modelo;
 
-import java.util.Date;
-
-
+import java.sql.Timestamp;
 
 /**
  *
  * @author Tiago
  */
-public class Endereco {
+public class Endereco
+{
 
-    protected String lagradouro;
-    protected String bairro;
-    protected String cep;
-    protected String cidade;
-    protected String estado;
-    private Date dataCadastro;
+    private int idEndereco;
+    private int idCliente;
+
+    private String lagradouro;
+    private String numero;
+    private String bairro;
+    private String cep;
+    private String cidade;
+    private String estado;
+    private Timestamp dataCadastro;
     private String ativo;
 
 
@@ -37,30 +40,39 @@ public class Endereco {
     }
 
     public void setBairro(String bairro) {
-        this.bairro = bairro;
+        if(bairro.isEmpty())
+            throw new RuntimeException("O campo bairro não pode estar vazio.");
+        else
+            this.bairro = bairro;
     }
 
     public String getCep() {
         return cep;
     }
 
-        public String getCidade() {
+    public void setCep(String cep) {
+        if(cep.isEmpty())
+            throw new RuntimeException("O campo cep não pode estar vazio.");
+        else
+            this.cep = cep;
+    }
+
+    public String getCidade() {
         return cidade;
     }
 
     public void setCidade(String cidade) {
-        this.cidade = cidade;
+        if(cidade.isEmpty())
+            throw new RuntimeException("O campo cidade não pode estar vazio.");
+        else
+            this.cidade = cidade;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public Date getDataCadastro() {
+    public Timestamp getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
+    public void setDataCadastro(Timestamp dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
@@ -69,7 +81,26 @@ public class Endereco {
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        if(estado.isEmpty())
+            throw new RuntimeException("Você deve selecionar um estado.");
+        else
+            this.estado = estado;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public int getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(int idEndereco) {
+        this.idEndereco = idEndereco;
     }
 
     public String getLagradouro() {
@@ -77,6 +108,20 @@ public class Endereco {
     }
 
     public void setLagradouro(String lagradouro) {
-        this.lagradouro = lagradouro;
+        if(lagradouro.isEmpty())
+            throw new RuntimeException("O campo lagradouro não pode estar vazio.");
+        else
+            this.lagradouro = lagradouro;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        if(numero.isEmpty())
+            throw new RuntimeException("O campo número não pode estar vazio.");
+        else
+            this.numero = numero;
     }
 }

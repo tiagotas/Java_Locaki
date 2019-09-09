@@ -4,16 +4,19 @@
  */
 
 /*
- * Filme.java
+ * CadFilme.java
  *
- * Created on 21/04/2010, 18:17:39
+ * Created on 28/05/2010, 16:55:55
  */
 
 package visualizacao;
 
 import controle.FilmeCRUD;
-import javax.swing.*;
+import java.sql.SQLException;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import modelo.Filme;
+import visualizacao.Relatorios.*;
 
 /**
  *
@@ -21,9 +24,67 @@ import modelo.Filme;
  */
 public class CadFilme extends javax.swing.JFrame {
 
-    /** Creates new form Filme */
+   ////// CLIENTES //////
+    CadCliente cc = null;
+
+    ////// FILMES //////
+
+    CadFilme cf = null;
+
+    ////// GENEROS //////
+
+    CadGenero cg = null;
+
+    ////// PROMOCOES //////
+
+    CadPromocao cp = null;
+
+    ////// LOCACOES //////
+
+    CadLocacao cl = null;
+    
+    /** Creates new form CadFilme */
     public CadFilme() {
         initComponents();
+        this.setBounds(420, 250, 577, 371);
+        this.preencherGeneros();
+    }
+
+    private void initCampos()
+    {
+        titulo.setText(null);
+        unidades.setText(null);
+
+        this.preencherGeneros();
+    }
+
+    private void preencherGeneros()
+    {
+        try
+        {
+            FilmeCRUD fCrud = new FilmeCRUD();
+
+            listaGenerosGerais.setModel(fCrud.listarGenerosGerais(0));
+            listaGenerosFilme.setModel(fCrud.listarGenerosFilme(0));
+
+            this.validarBotoes();
+
+        } catch (SQLException e) {
+           JOptionPane.showMessageDialog(this, "Desculpe, ocorreu um erro: "  + e.getMessage(), "Locaki ~ A Sua Locadora!", 0);
+        }
+    }
+
+    private void validarBotoes()
+    {
+        if(listaGenerosGerais.getModel().getSize() == 0)
+            addGenero.setEnabled(false);
+        else
+            addGenero.setEnabled(true);
+
+        if(listaGenerosFilme.getModel().getSize() == 0)
+            removeGenero.setEnabled(false);
+        else
+            removeGenero.setEnabled(true);
     }
 
     /** This method is called from within the constructor to
@@ -40,11 +101,22 @@ public class CadFilme extends javax.swing.JFrame {
         titulo = new javax.swing.JTextField();
         javax.swing.JLabel jLabel2 = new javax.swing.JLabel();
         unidades = new javax.swing.JTextField();
-        javax.swing.JButton jButton2 = new javax.swing.JButton();
-        javax.swing.JButton jButton1 = new javax.swing.JButton();
         javax.swing.JPanel jPanel2 = new javax.swing.JPanel();
         javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-        listaGeneros = new javax.swing.JList();
+        listaGenerosGerais = new javax.swing.JList();
+        addGenero = new javax.swing.JButton();
+        removeGenero = new javax.swing.JButton();
+        javax.swing.JPanel jPanel3 = new javax.swing.JPanel();
+        javax.swing.JScrollPane jScrollPane2 = new javax.swing.JScrollPane();
+        listaGenerosFilme = new javax.swing.JList();
+        javax.swing.JButton jButton3 = new javax.swing.JButton();
+        javax.swing.JButton jButton4 = new javax.swing.JButton();
+        javax.swing.JLabel jLabel3 = new javax.swing.JLabel();
+        javax.swing.JLabel jLabel4 = new javax.swing.JLabel();
+        lancamento = new javax.swing.JCheckBox();
+        javax.swing.JLabel jLabel5 = new javax.swing.JLabel();
+        diasDevolucao = new javax.swing.JTextField();
+        valor = new javax.swing.JFormattedTextField();
         javax.swing.JMenuBar jMenuBar1 = new javax.swing.JMenuBar();
         javax.swing.JMenu jMenu1 = new javax.swing.JMenu();
         javax.swing.JMenu jMenu10 = new javax.swing.JMenu();
@@ -67,9 +139,9 @@ public class CadFilme extends javax.swing.JFrame {
         javax.swing.JMenu jMenu14 = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem34 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem33 = new javax.swing.JMenuItem();
-        javax.swing.JMenuItem jMenuItem35 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem4 = new javax.swing.JMenuItem();
         javax.swing.JPopupMenu.Separator jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        javax.swing.JMenuItem jMenuItem36 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem5 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem11 = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenu3 = new javax.swing.JMenu();
         javax.swing.JMenu jMenu4 = new javax.swing.JMenu();
@@ -94,57 +166,94 @@ public class CadFilme extends javax.swing.JFrame {
         javax.swing.JPopupMenu.Separator jSeparator1 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JMenuItem jMenuItem9 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Locaki ~ A Sua Locadora! : Cadastro de Filmes");
+        setTitle("Locaki ~ A Sua Locadora! : Cadastro de Filme");
         setAlwaysOnTop(true);
         setResizable(false);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                setarCampos(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastrar Novo Filme:"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Filme:"));
 
         jLabel1.setText("Título:");
 
-        jLabel2.setText("Unidades Disponíveis");
+        jLabel2.setText("Unidades:");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/cross.png"))); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Gêneros:"));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_add.png"))); // NOI18N
-        jButton1.setText("Cadastrar!");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Gêneros do Filme:"));
-
-        listaGeneros.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Terror", "Comédia", "Suspense", "Drama", "Épico", "Comédia Romântica", "Pornozão", "Ficção Científica", " " };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(listaGeneros);
+        listaGenerosGerais.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(listaGenerosGerais);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
         );
+
+        addGenero.setText(">");
+        addGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addGeneroActionPerformed(evt);
+            }
+        });
+
+        removeGenero.setText("<");
+        removeGenero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeGeneroActionPerformed(evt);
+            }
+        });
+
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Gêneros do Filme:"));
+
+        listaGenerosFilme.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(listaGenerosFilme);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+        );
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_add.png"))); // NOI18N
+        jButton3.setText("Cadastrar!");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/cross.png"))); // NOI18N
+        jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Valor Locação:");
+
+        jLabel4.setText("Lançamento:");
+
+        lancamento.setText("Este filme pe lançamento");
+
+        jLabel5.setText("Dias até Devolução:");
+
+        valor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -153,40 +262,75 @@ public class CadFilme extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(removeGenero)
+                            .addComponent(addGenero))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(unidades, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                            .addComponent(titulo, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(lancamento))
+                                .addGap(20, 20, 20)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(diasDevolucao, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                                    .addComponent(jLabel5))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(valor)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(unidades, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(unidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(unidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lancamento)
+                            .addComponent(diasDevolucao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(valor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(addGenero)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(removeGenero))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
                 .addContainerGap())
         );
 
@@ -205,7 +349,7 @@ public class CadFilme extends javax.swing.JFrame {
         jMenu10.add(jMenuItem23);
 
         jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group_add.png"))); // NOI18N
-        jMenuItem21.setText("Novo Cliente");
+        jMenuItem21.setText("Novo Cliente...");
         jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem21ActionPerformed(evt);
@@ -237,7 +381,7 @@ public class CadFilme extends javax.swing.JFrame {
         jMenu11.add(jMenuItem26);
 
         jMenuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_add.png"))); // NOI18N
-        jMenuItem24.setText("Novo Filme");
+        jMenuItem24.setText("Novo Filme...");
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem24ActionPerformed(evt);
@@ -270,7 +414,7 @@ public class CadFilme extends javax.swing.JFrame {
         jMenu12.add(jMenuItem29);
 
         jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/comments_add.png"))); // NOI18N
-        jMenuItem27.setText("Novo Gênero");
+        jMenuItem27.setText("Novo Gênero...");
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem27ActionPerformed(evt);
@@ -302,7 +446,7 @@ public class CadFilme extends javax.swing.JFrame {
         jMenu13.add(jMenuItem32);
 
         jMenuItem30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/heart_add.png"))); // NOI18N
-        jMenuItem30.setText("Nova Promoção");
+        jMenuItem30.setText("Nova Promoção...");
         jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem30ActionPerformed(evt);
@@ -342,26 +486,26 @@ public class CadFilme extends javax.swing.JFrame {
         });
         jMenu14.add(jMenuItem33);
 
-        jMenuItem35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_delete.png"))); // NOI18N
-        jMenuItem35.setText("Remover Locação");
-        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_delete.png"))); // NOI18N
+        jMenuItem4.setText("Remover Locação");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem35ActionPerformed(evt);
+                jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu14.add(jMenuItem35);
+        jMenu14.add(jMenuItem4);
 
         jMenu1.add(jMenu14);
         jMenu1.add(jSeparator3);
 
-        jMenuItem36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/arrow_rotate_clockwise.png"))); // NOI18N
-        jMenuItem36.setText("Voltar Menu Principal");
-        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/arrow_rotate_clockwise.png"))); // NOI18N
+        jMenuItem5.setText("Voltar Menu Principal");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem36ActionPerformed(evt);
+                jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem36);
+        jMenu1.add(jMenuItem5);
 
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/door_in.png"))); // NOI18N
         jMenuItem11.setText("Sair");
@@ -556,42 +700,44 @@ public class CadFilme extends javax.swing.JFrame {
     private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        RelCliente rc = new RelCliente();
+        rc.setVisible(true);
 }//GEN-LAST:event_jMenuItem23ActionPerformed
 
     private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
         // TODO add your handling code here:
-        CadCliente cc = new CadCliente();
+        if(cc == null)
+            cc = new CadCliente();
+
         cc.setVisible(true);
-        this.setVisible(false);
 }//GEN-LAST:event_jMenuItem21ActionPerformed
 
     private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
         // TODO add your handling code here:
-        EdiCliente ec = new EdiCliente();
+        RelCliente ec = new RelCliente();
         ec.setVisible(true);
-        this.setVisible(false);
 }//GEN-LAST:event_jMenuItem22ActionPerformed
 
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        RelFilme rf = new RelFilme();
+        rf.setVisible(true);
 }//GEN-LAST:event_jMenuItem26ActionPerformed
 
     private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
         // TODO add your handling code here:
-        CadFilme cf = new CadFilme();
+        if(cf == null)
+            cf = new CadFilme();
+
         cf.setVisible(true);
-        this.setVisible(false);
 }//GEN-LAST:event_jMenuItem24ActionPerformed
 
     private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
         // TODO add your handling code here:
 
-        EdiFilme ef = new EdiFilme();
-        ef.setVisible(true);
-        this.setVisible(false);
+        RelFilme rf = new RelFilme();
+        rf.setVisible(true);
 }//GEN-LAST:event_jMenuItem25ActionPerformed
 
     private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
@@ -599,71 +745,69 @@ public class CadFilme extends javax.swing.JFrame {
 
         RelGenero rg = new RelGenero();
         rg.setVisible(true);
-        this.setVisible(false);
 }//GEN-LAST:event_jMenuItem29ActionPerformed
 
     private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
         // TODO add your handling code here:
+        if(cg == null)
+            cg = new CadGenero();
 
-        CadGenero cg = new CadGenero();
         cg.setVisible(true);
-        this.setVisible(false);
 }//GEN-LAST:event_jMenuItem27ActionPerformed
 
     private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
         // TODO add your handling code here:
-        EdiGenero eg = new EdiGenero();
-        eg.setVisible(true);
-        this.setVisible(false);
+        RelGenero rg = new RelGenero();
+        rg.setVisible(true);
 }//GEN-LAST:event_jMenuItem28ActionPerformed
 
     private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
         // TODO add your handling code here:
-
-        this.setVisible(false);
+        RelPromocao rp = new RelPromocao();
+        rp.setVisible(true);
 }//GEN-LAST:event_jMenuItem32ActionPerformed
 
     private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
         // TODO add your handling code here:
-        CadPromocao cp = new CadPromocao();
+        if(cp == null)
+            cp = new CadPromocao();
+
         cp.setVisible(true);
-        this.setVisible(false);
 }//GEN-LAST:event_jMenuItem30ActionPerformed
 
     private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
         // TODO add your handling code here:
-        EdiPromocao ep = new EdiPromocao();
-        ep.setVisible(true);
-        this.setVisible(false);
+        RelPromocao rp = new RelPromocao();
+        rp.setVisible(true);
 }//GEN-LAST:event_jMenuItem31ActionPerformed
 
     private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        RelLocacao rl = new RelLocacao();
+        rl.setVisible(true);
 }//GEN-LAST:event_jMenuItem34ActionPerformed
 
     private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
         // TODO add your handling code here:
-        CadLocacao cl = new CadLocacao();
+        if(cl == null)
+            cl = new CadLocacao();
+
         cl.setVisible(true);
-        this.setVisible(false);
 }//GEN-LAST:event_jMenuItem33ActionPerformed
 
-    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        EdiLocacao el = new EdiLocacao();
-        el.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem35ActionPerformed
+        RelLocacao rl = new RelLocacao();
+        rl.setVisible(true);
+}//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
 
-        MenuPrincipal mp = new MenuPrincipal();
-        mp.setVisible(true);
+        MenuPrincipal.mp.setVisible(true);
         this.setVisible(false);
-}//GEN-LAST:event_jMenuItem36ActionPerformed
+}//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
@@ -675,79 +819,91 @@ public class CadFilme extends javax.swing.JFrame {
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        ClientesComFilmes ccf = new ClientesComFilmes();
+        ccf.setVisible(true);
 }//GEN-LAST:event_jMenuItem12ActionPerformed
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        ClientesMaisAtivos cma = new ClientesMaisAtivos();
+        cma.setVisible(true);
 }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
-
-        this.setVisible(false);
+        ClientesMenosAtivos cma = new ClientesMenosAtivos();
+        cma.setVisible(true);
 }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FilmesMaisProcurados fmp = new FilmesMaisProcurados();
+        fmp.setVisible(true);
 }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FilmesMenosProcurados fmp = new FilmesMenosProcurados();
+        fmp.setVisible(true);
 }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FilmesTopDez ftd = new FilmesTopDez();
+        ftd.setVisible(true);
 }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesDevolucoesAtrasadas lda = new LocacoesDevolucoesAtrasadas();
+        lda.setVisible(true);
 }//GEN-LAST:event_jMenuItem16ActionPerformed
 
     private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesFilmesDevolvidosHoje lfdh = new LocacoesFilmesDevolvidosHoje();
+        lfdh.setVisible(true);
 }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        LocacoesTotalLocacoesMes ltlm = new LocacoesTotalLocacoesMes();
+        ltlm.setVisible(true);
 }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FinanceiroReceitaPorPeriodo frpp = new FinanceiroReceitaPorPeriodo();
+        frpp.setVisible(true);
 }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FinanceiroReceitaPorFilme frpf = new FinanceiroReceitaPorFilme();
+        frpf.setVisible(true);
 }//GEN-LAST:event_jMenuItem19ActionPerformed
 
     private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        FinanceiroReceitaPorGenero frpg = new FinanceiroReceitaPorGenero();
+        frpg.setVisible(true);
 }//GEN-LAST:event_jMenuItem20ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
         // TODO add your handling code here:
 
-        this.setVisible(false);
+        Dicas d = new Dicas();
+        d.setVisible(true);
 }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
@@ -757,29 +913,93 @@ public class CadFilme extends javax.swing.JFrame {
         s.setVisible(true);
 }//GEN-LAST:event_jMenuItem9ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addGeneroActionPerformed
         // TODO add your handling code here:
+        try
+        {
+            DefaultListModel generosGerais = (DefaultListModel) listaGenerosGerais.getModel();
+            DefaultListModel generosFilme  = (DefaultListModel) listaGenerosFilme.getModel();
 
-        MenuPrincipal.mp.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jButton2ActionPerformed
+            if(!listaGenerosGerais.getSelectedValue().equals(""))
+            {
+                generosFilme.addElement(listaGenerosGerais.getSelectedValue());
+                generosGerais.removeElement(listaGenerosGerais.getSelectedValue());
+            }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+            listaGenerosGerais.setModel(generosGerais);
+            listaGenerosFilme.setModel(generosFilme);
 
-        Filme f = new Filme();
-
-        f.setTitulo(titulo.getText());
-        f.setUnidades(Integer.parseInt(unidades.getText()));
-
-        try {
-            FilmeCRUD cad = new FilmeCRUD();
-            cad.cadastrar(f);
-            JOptionPane.showMessageDialog(this, "Promoção Cadastrada com Sucesso!", "Locaki ~ A Sua Locadora!", 1);
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(this, "Desculpe, ocorreu um erro: \n "  + e.getMessage(), "Locaki ~ A Sua Locadora!", 0);
+            this.validarBotoes();
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Você deve selecionar um gênero para adiciona-lo.", "Locaki ~ A Sua Locadora!", 0);
         }
-}//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_addGeneroActionPerformed
+
+    private void removeGeneroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeGeneroActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            DefaultListModel generosGerais = (DefaultListModel) listaGenerosGerais.getModel();
+            DefaultListModel generosFilme  = (DefaultListModel) listaGenerosFilme.getModel();
+
+            if(!listaGenerosFilme.getSelectedValue().equals(""))
+            {
+                generosGerais.addElement(listaGenerosFilme.getSelectedValue());
+                generosFilme.removeElement(listaGenerosFilme.getSelectedValue());
+            }
+
+            listaGenerosGerais.setModel(generosGerais);
+            listaGenerosFilme.setModel(generosFilme);
+
+            this.validarBotoes();
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Você deve selecionar um gênero para adiciona-lo.", "Locaki ~ A Sua Locadora!", 0);
+        }
+    }//GEN-LAST:event_removeGeneroActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        try
+        {
+            Filme f = new Filme();
+
+            f.setTitulo(titulo.getText().toUpperCase());
+            f.setUnidades(Integer.parseInt(unidades.getText()));
+            f.setDiasDevolucao(Integer.parseInt(diasDevolucao.getText()));
+            f.setValor(Double.parseDouble(valor.getText().replace(",", ".")));
+
+            if(lancamento.isSelected())
+                f.setLancamento("S");
+            else
+                f.setLancamento("N");
+
+            Filme.setGeneros((DefaultListModel) listaGenerosFilme.getModel());
+
+
+            FilmeCRUD fCrud = new FilmeCRUD();
+
+            fCrud.cadastrar(f);
+
+             JOptionPane.showMessageDialog(this, "Cliente Cadastrado com Sucesso!", "Locaki ~ A Sua Locadora!", 1);
+
+             this.setVisible(false);
+
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Desculpe, ocorreu um erro: \n" + e.getMessage(), "Locaki ~ A Sua Locadora!", 0);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void setarCampos(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_setarCampos
+        // TODO add your handling code here:
+
+        this.initCampos();
+    }//GEN-LAST:event_setarCampos
 
     /**
     * @param args the command line arguments
@@ -787,15 +1007,21 @@ public class CadFilme extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new  CadFilme().setVisible(true);
+                new CadFilme().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList listaGeneros;
-    private javax.swing.JTextField titulo;
-    private javax.swing.JTextField unidades;
+    javax.swing.JButton addGenero;
+    private javax.swing.JTextField diasDevolucao;
+    private javax.swing.JCheckBox lancamento;
+    javax.swing.JList listaGenerosFilme;
+    javax.swing.JList listaGenerosGerais;
+    javax.swing.JButton removeGenero;
+    javax.swing.JTextField titulo;
+    javax.swing.JTextField unidades;
+    private javax.swing.JFormattedTextField valor;
     // End of variables declaration//GEN-END:variables
 
 }

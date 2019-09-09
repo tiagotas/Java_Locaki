@@ -13,10 +13,13 @@ package visualizacao;
 
 import controle.PromocaoCRUD;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Promocao;
+import visualizacao.Relatorios.*;
 
 /**
  *
@@ -24,13 +27,36 @@ import modelo.Promocao;
  */
 public class RelPromocao extends javax.swing.JFrame {
 
+   ////// CLIENTES //////
+    CadCliente cc = null;
+
+    ////// FILMES //////
+
+    CadFilme cf = null;
+
+    ////// GENEROS //////
+
+    CadGenero cg = null;
+
+    ////// PROMOCOES //////
+
+    CadPromocao cp = null;
+
+    ////// LOCACOES //////
+
+    CadLocacao cl = null;
+
     /** Creates new form Promocoes */
+
+
+    
     public RelPromocao() {
         initComponents();
+        this.setBounds(420, 250, 577, 371);
         carregarTabela();
     }
 
-    private void carregarTabela()
+    public void carregarTabela()
     {
         try
         {
@@ -41,19 +67,29 @@ public class RelPromocao extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) tabelaPromocao.getModel();
             modelo.setRowCount(0);
 
+            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+            DecimalFormat df = new DecimalFormat("#,###0.00");
+
             for (Promocao p : lista)
             {
                 modelo.addRow(new Object[]{
                             p.getIdPromocao(),
                             p.getDescricao(),
-                            p.getCoeficienteDesconto(),
-                            p.getDataCadastro()
+                            df.format(p.getCoeficienteDesconto()),
+                            formatador.format(p.getDataCadastro())
                         });
             }
         } catch(SQLException e)
         {
              JOptionPane.showMessageDialog(this, "Desculpe, ocorreu um erro: "  + e.getMessage(), "Locaki ~ A Sua Locadora!", 0);
         }
+    }
+
+    private void abreFormularioEdicao()
+    {
+            EdiPromocao ep = new EdiPromocao();
+            ep.getDados(Integer.parseInt(String.valueOf(tabelaPromocao.getValueAt(tabelaPromocao.getSelectedRow(), 0))));
+            ep.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -65,6 +101,11 @@ public class RelPromocao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        javax.swing.JPopupMenu menuPopUpPromocoes = new javax.swing.JPopupMenu();
+        javax.swing.JMenuItem jMenuItem3 = new javax.swing.JMenuItem();
+        javax.swing.JPopupMenu.Separator jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        javax.swing.JMenuItem jMenuItem1 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem2 = new javax.swing.JMenuItem();
         javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
         javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
         txtBusca = new javax.swing.JTextField();
@@ -94,9 +135,9 @@ public class RelPromocao extends javax.swing.JFrame {
         javax.swing.JMenu jMenu14 = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem34 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem33 = new javax.swing.JMenuItem();
-        javax.swing.JMenuItem jMenuItem35 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem4 = new javax.swing.JMenuItem();
         javax.swing.JPopupMenu.Separator jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        javax.swing.JMenuItem jMenuItem36 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem5 = new javax.swing.JMenuItem();
         javax.swing.JMenuItem jMenuItem11 = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenu3 = new javax.swing.JMenu();
         javax.swing.JMenu jMenu4 = new javax.swing.JMenu();
@@ -118,11 +159,40 @@ public class RelPromocao extends javax.swing.JFrame {
         javax.swing.JMenuItem jMenuItem20 = new javax.swing.JMenuItem();
         javax.swing.JMenu jMenu2 = new javax.swing.JMenu();
         javax.swing.JMenuItem jMenuItem10 = new javax.swing.JMenuItem();
-        javax.swing.JPopupMenu.Separator jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        javax.swing.JPopupMenu.Separator jSeparator5 = new javax.swing.JPopupMenu.Separator();
         javax.swing.JMenuItem jMenuItem9 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Locaki ~ A Sua Locadora! : Cadastro de Promoções");
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/heart.png"))); // NOI18N
+        jMenuItem3.setText("Visualizar Promoção");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuPopUpPromocoes.add(jMenuItem3);
+        menuPopUpPromocoes.add(jSeparator1);
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/pencil.png"))); // NOI18N
+        jMenuItem1.setText("Editar Item");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuPopUpPromocoes.add(jMenuItem1);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/heart_delete.png"))); // NOI18N
+        jMenuItem2.setText("Excluir Item");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menuPopUpPromocoes.add(jMenuItem2);
+
+        setTitle("Locaki ~ A Sua Locadora! : Relação de Promoções");
+        setAlwaysOnTop(true);
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Promoção:"));
 
@@ -143,12 +213,12 @@ public class RelPromocao extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addComponent(jLabel1))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +243,7 @@ public class RelPromocao extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Object.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -187,6 +257,7 @@ public class RelPromocao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaPromocao.setComponentPopupMenu(menuPopUpPromocoes);
         tabelaPromocao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selecionaRegistro(evt);
@@ -220,7 +291,7 @@ public class RelPromocao extends javax.swing.JFrame {
         jMenu10.add(jMenuItem23);
 
         jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group_add.png"))); // NOI18N
-        jMenuItem21.setText("Novo Cliente");
+        jMenuItem21.setText("Novo Cliente...");
         jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem21ActionPerformed(evt);
@@ -252,7 +323,7 @@ public class RelPromocao extends javax.swing.JFrame {
         jMenu11.add(jMenuItem26);
 
         jMenuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_add.png"))); // NOI18N
-        jMenuItem24.setText("Novo Filme");
+        jMenuItem24.setText("Novo Filme...");
         jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem24ActionPerformed(evt);
@@ -285,7 +356,7 @@ public class RelPromocao extends javax.swing.JFrame {
         jMenu12.add(jMenuItem29);
 
         jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/comments_add.png"))); // NOI18N
-        jMenuItem27.setText("Novo Gênero");
+        jMenuItem27.setText("Novo Gênero...");
         jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem27ActionPerformed(evt);
@@ -317,7 +388,7 @@ public class RelPromocao extends javax.swing.JFrame {
         jMenu13.add(jMenuItem32);
 
         jMenuItem30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/heart_add.png"))); // NOI18N
-        jMenuItem30.setText("Nova Promoção");
+        jMenuItem30.setText("Nova Promoção...");
         jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem30ActionPerformed(evt);
@@ -357,26 +428,26 @@ public class RelPromocao extends javax.swing.JFrame {
         });
         jMenu14.add(jMenuItem33);
 
-        jMenuItem35.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_delete.png"))); // NOI18N
-        jMenuItem35.setText("Remover Locação");
-        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_delete.png"))); // NOI18N
+        jMenuItem4.setText("Remover Locação");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem35ActionPerformed(evt);
+                jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu14.add(jMenuItem35);
+        jMenu14.add(jMenuItem4);
 
         jMenu1.add(jMenu14);
         jMenu1.add(jSeparator3);
 
-        jMenuItem36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/arrow_rotate_clockwise.png"))); // NOI18N
-        jMenuItem36.setText("Voltar Menu Principal");
-        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/arrow_rotate_clockwise.png"))); // NOI18N
+        jMenuItem5.setText("Voltar Menu Principal");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem36ActionPerformed(evt);
+                jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem36);
+        jMenu1.add(jMenuItem5);
 
         jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/door_in.png"))); // NOI18N
         jMenuItem11.setText("Sair");
@@ -532,7 +603,7 @@ public class RelPromocao extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem10);
-        jMenu2.add(jSeparator1);
+        jMenu2.add(jSeparator5);
 
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/emotion_wink.png"))); // NOI18N
         jMenuItem9.setText("Sobre o Sistema");
@@ -572,212 +643,9 @@ public class RelPromocao extends javax.swing.JFrame {
         setBounds((screenSize.width-577)/2, (screenSize.height-371)/2, 577, 371);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem23ActionPerformed
-
-    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
-        // TODO add your handling code here:
-        CadCliente cc = new CadCliente();
-        cc.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem21ActionPerformed
-
-    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
-        // TODO add your handling code here:
-        EdiCliente ec = new EdiCliente();
-        ec.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem22ActionPerformed
-
-    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem26ActionPerformed
-
-    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
-        // TODO add your handling code here:
-        CadFilme cf = new CadFilme();
-        cf.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem24ActionPerformed
-
-    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
-        // TODO add your handling code here:
-
-        EdiFilme ef = new EdiFilme();
-        ef.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem25ActionPerformed
-
-    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
-        // TODO add your handling code here:
-
-        RelGenero rg = new RelGenero();
-        rg.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem29ActionPerformed
-
-    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
-        // TODO add your handling code here:
-
-        CadGenero cg = new CadGenero();
-        cg.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem27ActionPerformed
-
-    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
-        // TODO add your handling code here:
-        EdiGenero eg = new EdiGenero();
-        eg.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem28ActionPerformed
-
-    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem32ActionPerformed
-
-    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
-        // TODO add your handling code here:
-        CadPromocao cp = new CadPromocao();
-        cp.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem30ActionPerformed
-
-    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
-        // TODO add your handling code here:
-        EdiPromocao ep = new EdiPromocao();
-        ep.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem31ActionPerformed
-
-    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem34ActionPerformed
-
-    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
-        // TODO add your handling code here:
-        CadLocacao cl = new CadLocacao();
-        cl.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem33ActionPerformed
-
-    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
-        // TODO add your handling code here:
-        EdiLocacao el = new EdiLocacao();
-        el.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem35ActionPerformed
-
-    private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
-        // TODO add your handling code here:
-
-        MenuPrincipal.mp.setVisible(true);
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem36ActionPerformed
-
-    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        // TODO add your handling code here:
-
-        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja sair do sistema?", "Locaki ~ A Sua Locadora!", 2, 2) == 0)
-            System.exit(0);
-}//GEN-LAST:event_jMenuItem11ActionPerformed
-
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem12ActionPerformed
-
-    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem13ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem7ActionPerformed
-
-    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem15ActionPerformed
-
-    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem16ActionPerformed
-
-    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem18ActionPerformed
-
-    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem17ActionPerformed
-
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem14ActionPerformed
-
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem19ActionPerformed
-
-    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem20ActionPerformed
-
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        // TODO add your handling code here:
-
-        this.setVisible(false);
-}//GEN-LAST:event_jMenuItem10ActionPerformed
-
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-
-        Sobre s = new Sobre();
-        s.setVisible(true);
-}//GEN-LAST:event_jMenuItem9ActionPerformed
-
     private void selecionaRegistro(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selecionaRegistro
         if (evt.getClickCount() == 2)
-            JOptionPane.showMessageDialog(this, tabelaPromocao.getValueAt(tabelaPromocao.getSelectedRow(), 0), "Locaki ~ A Sua Locadora!", 1);        // TODO add your handling code here:
+            this.abreFormularioEdicao();
     }//GEN-LAST:event_selecionaRegistro
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -792,13 +660,15 @@ public class RelPromocao extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) tabelaPromocao.getModel();
             modelo.setRowCount(0);
 
+            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+
             for (Promocao p : lista)
             {
                 modelo.addRow(new Object[]{
                             p.getIdPromocao(),
                             p.getDescricao(),
                             p.getCoeficienteDesconto(),
-                            p.getDataCadastro()
+                            formatador.format(p.getDataCadastro())
                         });
             }
         } catch(SQLException e)
@@ -807,6 +677,252 @@ public class RelPromocao extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        //JOptionPane.showMessageDialog(this, tabelaPromocao.getValueAt(tabelaPromocao.getSelectedRow(), 0), "Locaki ~ A Sua Locadora!", 1);
+        this.abreFormularioEdicao();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+
+        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja escluir esta promoção?", "Locaki ~ A Sua Locadora!", 2, 2) == 0)
+        {
+            try
+            {
+                PromocaoCRUD cad = new PromocaoCRUD();
+                cad.excluir(Integer.parseInt(String.valueOf(tabelaPromocao.getValueAt(tabelaPromocao.getSelectedRow(), 0))));
+
+                JOptionPane.showMessageDialog(this, "Promoção Excluída com Sucesso!", "Locaki ~ A Sua Locadora!", 1);
+                this.carregarTabela();
+            } catch(SQLException e)
+            {
+             JOptionPane.showMessageDialog(this, "Desculpe, ocorreu um erro: \n "  + e.getMessage(), "Locaki ~ A Sua Locadora!", 0);
+            }
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        this.abreFormularioEdicao();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+        // TODO add your handling code here:
+
+        RelCliente rc = new RelCliente();
+        rc.setVisible(true);
+}//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        // TODO add your handling code here:
+        if(cc == null)
+            cc = new CadCliente();
+
+        cc.setVisible(true);
+}//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        // TODO add your handling code here:
+        RelCliente ec = new RelCliente();
+        ec.setVisible(true);
+}//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        // TODO add your handling code here:
+
+        RelFilme rf = new RelFilme();
+        rf.setVisible(true);
+}//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        // TODO add your handling code here:
+        if(cf == null)
+            cf = new CadFilme();
+
+        cf.setVisible(true);
+}//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+        // TODO add your handling code here:
+
+        RelFilme rf = new RelFilme();
+        rf.setVisible(true);
+}//GEN-LAST:event_jMenuItem25ActionPerformed
+
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        // TODO add your handling code here:
+
+        RelGenero rg = new RelGenero();
+        rg.setVisible(true);
+}//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        // TODO add your handling code here:
+        if(cg == null)
+            cg = new CadGenero();
+
+        cg.setVisible(true);
+}//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        // TODO add your handling code here:
+        RelGenero rg = new RelGenero();
+        rg.setVisible(true);
+}//GEN-LAST:event_jMenuItem28ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        // TODO add your handling code here:
+        RelPromocao rp = new RelPromocao();
+        rp.setVisible(true);
+}//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        // TODO add your handling code here:
+        if(cp == null)
+            cp = new CadPromocao();
+
+        cp.setVisible(true);
+}//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        // TODO add your handling code here:
+        RelPromocao rp = new RelPromocao();
+        rp.setVisible(true);
+}//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        // TODO add your handling code here:
+
+        RelLocacao rl = new RelLocacao();
+        rl.setVisible(true);
+}//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+        // TODO add your handling code here:
+        if(cl == null)
+            cl = new CadLocacao();
+
+        cl.setVisible(true);
+}//GEN-LAST:event_jMenuItem33ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        RelLocacao rl = new RelLocacao();
+        rl.setVisible(true);
+}//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+
+        MenuPrincipal.mp.setVisible(true);
+        this.setVisible(false);
+}//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+
+        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja sair do sistema?", "Locaki ~ A Sua Locadora!", 2, 2) == 0)
+            System.exit(0);
+}//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // TODO add your handling code here:
+
+        ClientesComFilmes ccf = new ClientesComFilmes();
+        ccf.setVisible(true);
+}//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+
+        ClientesMaisAtivos cma = new ClientesMaisAtivos();
+        cma.setVisible(true);
+}//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        ClientesMenosAtivos cma = new ClientesMenosAtivos();
+        cma.setVisible(true);
+}//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+
+        FilmesMaisProcurados fmp = new FilmesMaisProcurados();
+        fmp.setVisible(true);
+}//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+
+        FilmesMenosProcurados fmp = new FilmesMenosProcurados();
+        fmp.setVisible(true);
+}//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+
+        FilmesTopDez ftd = new FilmesTopDez();
+        ftd.setVisible(true);
+}//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+
+        LocacoesDevolucoesAtrasadas lda = new LocacoesDevolucoesAtrasadas();
+        lda.setVisible(true);
+}//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        // TODO add your handling code here:
+
+        LocacoesFilmesDevolvidosHoje lfdh = new LocacoesFilmesDevolvidosHoje();
+        lfdh.setVisible(true);
+}//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+
+        LocacoesTotalLocacoesMes ltlm = new LocacoesTotalLocacoesMes();
+        ltlm.setVisible(true);
+}//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+
+        FinanceiroReceitaPorPeriodo frpp = new FinanceiroReceitaPorPeriodo();
+        frpp.setVisible(true);
+}//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        // TODO add your handling code here:
+
+        FinanceiroReceitaPorFilme frpf = new FinanceiroReceitaPorFilme();
+        frpf.setVisible(true);
+}//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        // TODO add your handling code here:
+
+        FinanceiroReceitaPorGenero frpg = new FinanceiroReceitaPorGenero();
+        frpg.setVisible(true);
+}//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+
+        Dicas d = new Dicas();
+        d.setVisible(true);
+}//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+
+        Sobre s = new Sobre();
+        s.setVisible(true);
+}//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -820,8 +936,8 @@ public class RelPromocao extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable tabelaPromocao;
-    private javax.swing.JTextField txtBusca;
+    javax.swing.JTable tabelaPromocao;
+    javax.swing.JTextField txtBusca;
     // End of variables declaration//GEN-END:variables
 
 }

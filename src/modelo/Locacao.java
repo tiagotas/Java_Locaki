@@ -5,50 +5,110 @@
 
 package modelo;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+
+
 /**
  *
  * @author Tiago
  */
-public class Locacao {
 
-    String lTitulo, lGenero;
-    int lCod, lQuant;
 
-    public int getlCod() {
-        return lCod;
+public class Locacao
+{
+
+    private int idLocacao;
+
+    private String titulo, cliente, promocao;
+
+    private ArrayList<Filme> itensLocacao;
+
+    private Date dataDevolucaoEstimada;
+
+    private Timestamp dataLocacao, dataDevolucaoReal;
+
+    private double valorLocacao;
+
+
+    public int getIdLocacao()
+    {
+        return idLocacao;
+    }
+    
+    public void setIdLocacao(int idLocacao)
+    {
+        this.idLocacao = idLocacao;
     }
 
-    public void setlCod(int lCod) {
-        this.lCod = lCod;
+    public String getCliente() {
+        return cliente;
     }
 
-    public String getlGenero() {
-        return lGenero;
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
-    public void setlGenero(String lGenero) {
-        this.lGenero = lGenero;
+    public Date getDataLocacao()
+    {
+        return dataLocacao;
     }
 
-    public int getlQuant() {
-        return lQuant;
+    public void setDataLocacao(Timestamp dataLocacao)
+    {
+        this.dataLocacao = dataLocacao;
     }
 
-    public void setlQuant(int lQuant) {
-        this.lQuant = lQuant;
+    public Date getDataDevolucaoEstimada() {
+        return dataDevolucaoEstimada;
     }
 
-    public String getlTitulo() {
-        return lTitulo;
+    public void setDataDevolucaoEstimada(Date dataDevolucaoEstimada) {
+        this.dataDevolucaoEstimada = dataDevolucaoEstimada;
     }
 
-    public void setlTitulo(String lTitulo) {
-        this.lTitulo = lTitulo;
+    public Date getDataDevolucaoReal() {
+        return dataDevolucaoReal;
     }
 
+    public void setDataDevolucaoReal(Timestamp dataDevolucaoReal) {
+        this.dataDevolucaoReal = dataDevolucaoReal;
+    }
 
+    public ArrayList<Filme> getItensLocacao() {
+        return itensLocacao;
+    }
 
+    public void setItensLocacao(ArrayList<Filme> itensLocacao) {
+        this.itensLocacao = itensLocacao;
+    }
 
-   
+    public String getPromocao() {
+        return promocao;
+    }
 
+    public void setPromocao(String promocao) {
+        this.promocao = promocao;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public double getValorLocacao() {
+        return valorLocacao;
+    }
+
+    public void setValorLocacao(double valorLocacao) {
+        this.valorLocacao = valorLocacao;
+    }
 }
+
+
+
+ 

@@ -5,40 +5,68 @@
 
 package modelo;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Tiago
  */
-public class Cliente extends Endereco
-{
+public class Cliente {
 
-    public int idCliente;
-    public int idEndereco;
-    public String nome;
-    public String cpf;
-    public String rg;
-    public String telefone;
-    public Date dataCadastro;
-    public String fgAtivo;
+    private int idCliente;
+
+    private static ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
+    private static ArrayList<Telefone> telefones = new ArrayList<Telefone>();
+
+    private String nome;
+    private String cpf;
+    private String rg;
+    private String fgAtivo;
+    private String observacoes;
+
+    private Timestamp dataCadastro;
+
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
 
     public String getCpf() {
         return cpf;
     }
 
     public void setCpf(String cpf) {
-        this.cpf = cpf;
+        if(cpf.isEmpty())
+            throw new RuntimeException("O campo cpf não pode estar vazio.");
+        else
+            this.cpf = cpf;
     }
 
-    @Override
-    public Date getDataCadastro() {
+    public Timestamp getDataCadastro() {
         return dataCadastro;
     }
 
-    @Override
-    public void setDataCadastro(Date dataCadastro) {
+    public void setDataCadastro(Timestamp dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public ArrayList getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List enderecos) {
+        Cliente.enderecos = (ArrayList<Endereco>) enderecos;
+    }
+    
+    public void setTelefones(List telefones) {
+        Cliente.telefones = (ArrayList<Telefone>) telefones;
     }
 
     public String getFgAtivo() {
@@ -57,28 +85,15 @@ public class Cliente extends Endereco
         this.idCliente = idCliente;
     }
 
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public int getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(int idEndereco) {
-        this.idEndereco = idEndereco;
-    }
-
     public String getNome() {
         return nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if(nome.isEmpty())
+            throw new RuntimeException("O campo nome não pode estar vazio.");
+        else
+            this.nome = nome;
     }
 
     public String getRg() {
@@ -86,6 +101,13 @@ public class Cliente extends Endereco
     }
 
     public void setRg(String rg) {
-        this.rg = rg;
+        if(rg.isEmpty())
+            throw new RuntimeException("O campo rg não pode estar vazio.");
+        else
+            this.rg = rg;
+    }
+
+    public ArrayList getTelefones() {
+        return telefones;
     }
 }

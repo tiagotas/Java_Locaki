@@ -5,7 +5,7 @@
 
 package modelo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  *
@@ -15,15 +15,15 @@ public class Genero
 {
     public int idGenero;
     public String descricao;
-    public Date dataCadastro;
+    public Timestamp dataCadastro;
     public String fgAtivo;
 
     
-    public Date getDataCadastro() {
+    public Timestamp getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
+    public void setDataCadastro(Timestamp dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
@@ -32,7 +32,10 @@ public class Genero
     }
 
     public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        if(descricao.isEmpty())
+            throw new RuntimeException("O campo descrição não pode estar vazio.");
+        else
+            this.descricao = descricao;
     }
 
     public String getFgAtivo() {

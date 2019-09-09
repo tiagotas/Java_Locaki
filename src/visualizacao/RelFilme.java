@@ -11,7 +11,14 @@
 
 package visualizacao;
 
+import controle.FilmeCRUD;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Filme;
+import visualizacao.Relatorios.*;
 
 /**
  *
@@ -19,9 +26,65 @@ import javax.swing.JOptionPane;
  */
 public class RelFilme extends javax.swing.JFrame {
 
+   ////// CLIENTES //////
+    CadCliente cc = null;
+
+    ////// FILMES //////
+
+    CadFilme cf = null;
+
+    ////// GENEROS //////
+
+    CadGenero cg = null;
+
+    ////// PROMOCOES //////
+
+    CadPromocao cp = null;
+
+    ////// LOCACOES //////
+
+    CadLocacao cl = null;
+
     /** Creates new form Filme */
     public RelFilme() {
         initComponents();
+        this.setBounds(420, 250, 577, 371);
+        this.carregarTabela();
+    }
+
+    public void carregarTabela()
+    {
+        try
+        {
+            FilmeCRUD pro = new FilmeCRUD();
+
+            List<Filme> lista = (List<Filme>) pro.lista();
+
+            DefaultTableModel modelo = (DefaultTableModel) tabelaFilmes.getModel();
+            modelo.setRowCount(0);
+
+            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+
+            for (Filme f : lista)
+            {
+                modelo.addRow(new Object[]{
+                    f.getIdFilme(),
+                    f.getTitulo(),
+                    f.getUnidades(),
+                    formatador.format(f.getDataCadastro())
+                });
+            }
+        } catch(SQLException e)
+        {
+             JOptionPane.showMessageDialog(this, "Desculpe, ocorreu um erro: "  + e.getMessage(), "Locaki ~ A Sua Locadora!", 0);
+        }
+    }
+
+    private void abreFormularioEdicao()
+    {
+            EdiFilme ef = new EdiFilme();
+            ef.getDados(Integer.parseInt(String.valueOf(tabelaFilmes.getValueAt(tabelaFilmes.getSelectedRow(), 0))));
+            ef.setVisible(true);
     }
 
     /** This method is called from within the constructor to
@@ -33,22 +96,834 @@ public class RelFilme extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        javax.swing.JPopupMenu menuPopUpFilmes = new javax.swing.JPopupMenu();
+        javax.swing.JMenuItem jMenuItem3 = new javax.swing.JMenuItem();
+        javax.swing.JPopupMenu.Separator jSeparator5 = new javax.swing.JPopupMenu.Separator();
+        javax.swing.JMenuItem jMenuItem1 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem2 = new javax.swing.JMenuItem();
+        javax.swing.JPanel jPanel1 = new javax.swing.JPanel();
+        javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+        txtBusca = new javax.swing.JTextField();
+        javax.swing.JButton jButton1 = new javax.swing.JButton();
+        javax.swing.JPanel jPanel2 = new javax.swing.JPanel();
+        javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaFilmes = new javax.swing.JTable();
+        javax.swing.JMenuBar jMenuBar1 = new javax.swing.JMenuBar();
+        javax.swing.JMenu jMenu1 = new javax.swing.JMenu();
+        javax.swing.JMenu jMenu10 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem23 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem21 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem22 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu11 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem26 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem24 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem25 = new javax.swing.JMenuItem();
+        javax.swing.JPopupMenu.Separator jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        javax.swing.JMenu jMenu12 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem29 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem27 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem28 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu13 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem32 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem30 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem31 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu14 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem34 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem33 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem4 = new javax.swing.JMenuItem();
+        javax.swing.JPopupMenu.Separator jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        javax.swing.JMenuItem jMenuItem5 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem11 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu3 = new javax.swing.JMenu();
+        javax.swing.JMenu jMenu4 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem12 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem13 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem8 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu5 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem6 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem7 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem15 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu6 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem16 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem18 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem17 = new javax.swing.JMenuItem();
+        javax.swing.JPopupMenu.Separator jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        javax.swing.JMenu jMenu7 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem14 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem19 = new javax.swing.JMenuItem();
+        javax.swing.JMenuItem jMenuItem20 = new javax.swing.JMenuItem();
+        javax.swing.JMenu jMenu2 = new javax.swing.JMenu();
+        javax.swing.JMenuItem jMenuItem10 = new javax.swing.JMenuItem();
+        javax.swing.JPopupMenu.Separator jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        javax.swing.JMenuItem jMenuItem9 = new javax.swing.JMenuItem();
+
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film.png"))); // NOI18N
+        jMenuItem3.setText("Visualizar Filme");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        menuPopUpFilmes.add(jMenuItem3);
+        menuPopUpFilmes.add(jSeparator5);
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/pencil.png"))); // NOI18N
+        jMenuItem1.setText("Editar Filme");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuPopUpFilmes.add(jMenuItem1);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_delete.png"))); // NOI18N
+        jMenuItem2.setText("Excluir Filme");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menuPopUpFilmes.add(jMenuItem2);
+
+        setTitle("Locaki ~ A Sua Locadora! : Relação de Filmes");
+        setAlwaysOnTop(true);
+        setResizable(false);
+        addWindowStateListener(new java.awt.event.WindowStateListener() {
+            public void windowStateChanged(java.awt.event.WindowEvent evt) {
+                atualizarTabela(evt);
+            }
+        });
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Buscar Filme:"));
+
+        jLabel1.setText("Filme:");
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/find.png"))); // NOI18N
+        jButton1.setText("Buscar Filme!");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtBusca, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addComponent(jLabel1))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Relação de Filmes:"));
+
+        tabelaFilmes.setAutoCreateRowSorter(true);
+        tabelaFilmes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código:", "Título:", "Unidades:", "Data Cadastro:"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaFilmes.setComponentPopupMenu(menuPopUpFilmes);
+        tabelaFilmes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selecionaRegistro(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaFilmes);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+        );
+
+        jMenu1.setText("Cadastros");
+
+        jMenu10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group.png"))); // NOI18N
+        jMenu10.setText("Clientes");
+
+        jMenuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group_go.png"))); // NOI18N
+        jMenuItem23.setText("Relação de Clientes");
+        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem23ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem23);
+
+        jMenuItem21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group_add.png"))); // NOI18N
+        jMenuItem21.setText("Novo Cliente...");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem21);
+
+        jMenuItem22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group_edit.png"))); // NOI18N
+        jMenuItem22.setText("Editar Cliente");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
+        jMenu10.add(jMenuItem22);
+
+        jMenu1.add(jMenu10);
+
+        jMenu11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film.png"))); // NOI18N
+        jMenu11.setText("Filmes");
+
+        jMenuItem26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_go.png"))); // NOI18N
+        jMenuItem26.setText("Relação de Filmes");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem26);
+
+        jMenuItem24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_add.png"))); // NOI18N
+        jMenuItem24.setText("Novo Filme...");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem24);
+
+        jMenuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_edit.png"))); // NOI18N
+        jMenuItem25.setText("Editar Filme");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
+        jMenu11.add(jMenuItem25);
+
+        jMenu1.add(jMenu11);
+        jMenu1.add(jSeparator2);
+
+        jMenu12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/comments.png"))); // NOI18N
+        jMenu12.setText("Gêneros");
+
+        jMenuItem29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/comments.png"))); // NOI18N
+        jMenuItem29.setText("Relação de Gêneros");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
+        jMenu12.add(jMenuItem29);
+
+        jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/comments_add.png"))); // NOI18N
+        jMenuItem27.setText("Novo Gênero...");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        jMenu12.add(jMenuItem27);
+
+        jMenuItem28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/comment_edit.png"))); // NOI18N
+        jMenuItem28.setText("Editar Gênero");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jMenu12.add(jMenuItem28);
+
+        jMenu1.add(jMenu12);
+
+        jMenu13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/heart.png"))); // NOI18N
+        jMenu13.setText("Promoções");
+
+        jMenuItem32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/heart.png"))); // NOI18N
+        jMenuItem32.setText("Relação de Promoções");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem32);
+
+        jMenuItem30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/heart_add.png"))); // NOI18N
+        jMenuItem30.setText("Nova Promoção...");
+        jMenuItem30.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem30ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem30);
+
+        jMenuItem31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/pencil.png"))); // NOI18N
+        jMenuItem31.setText("Editar Promoção");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jMenu13.add(jMenuItem31);
+
+        jMenu1.add(jMenu13);
+
+        jMenu14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report.png"))); // NOI18N
+        jMenu14.setText("Locações");
+
+        jMenuItem34.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_go.png"))); // NOI18N
+        jMenuItem34.setText("Relação de Locações");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem34);
+
+        jMenuItem33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_add.png"))); // NOI18N
+        jMenuItem33.setText("Lançar Locação!");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem33ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem33);
+
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_delete.png"))); // NOI18N
+        jMenuItem4.setText("Remover Locação");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu14.add(jMenuItem4);
+
+        jMenu1.add(jMenu14);
+        jMenu1.add(jSeparator3);
+
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/arrow_rotate_clockwise.png"))); // NOI18N
+        jMenuItem5.setText("Voltar Menu Principal");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/door_in.png"))); // NOI18N
+        jMenuItem11.setText("Sair");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem11);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu3.setText("Relatórios");
+
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/group_go.png"))); // NOI18N
+        jMenu4.setText("Cliente...");
+
+        jMenuItem12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/house_go.png"))); // NOI18N
+        jMenuItem12.setText("Clientes com Filmes");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem12);
+
+        jMenuItem13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/arrow_up.png"))); // NOI18N
+        jMenuItem13.setText("Clientes Mais Ativos");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem13);
+
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/arrow_down.png"))); // NOI18N
+        jMenuItem8.setText("Clientes Menos Ativos");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem8);
+
+        jMenu3.add(jMenu4);
+
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film_go.png"))); // NOI18N
+        jMenu5.setText("Filmes...");
+
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/add.png"))); // NOI18N
+        jMenuItem6.setText("Filmes Mais Procurados");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem6);
+
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/delete.png"))); // NOI18N
+        jMenuItem7.setText("Filmes Menos Procurados");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem7);
+
+        jMenuItem15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/star.png"))); // NOI18N
+        jMenuItem15.setText("Top 10 do Mês");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem15);
+
+        jMenu3.add(jMenu5);
+
+        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/report_go.png"))); // NOI18N
+        jMenu6.setText("Locações...");
+
+        jMenuItem16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/exclamation.png"))); // NOI18N
+        jMenuItem16.setText("Devoluções Atrasadas");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem16);
+
+        jMenuItem18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/accept.png"))); // NOI18N
+        jMenuItem18.setText("Filmes Devolvidos Hoje");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem18);
+
+        jMenuItem17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/coins.png"))); // NOI18N
+        jMenuItem17.setText("Total de Lacações no Mês");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem17);
+
+        jMenu3.add(jMenu6);
+        jMenu3.add(jSeparator4);
+
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/money_dollar.png"))); // NOI18N
+        jMenu7.setText("Financeiro...");
+
+        jMenuItem14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/date.png"))); // NOI18N
+        jMenuItem14.setText("Receita por Período");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem14);
+
+        jMenuItem19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/film.png"))); // NOI18N
+        jMenuItem19.setText("Receita por Filme");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem19);
+
+        jMenuItem20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/comments.png"))); // NOI18N
+        jMenuItem20.setText("Receita por Gênero");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem20);
+
+        jMenu3.add(jMenu7);
+
+        jMenuBar1.add(jMenu3);
+
+        jMenu2.setText("Ajuda");
+
+        jMenuItem10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/lightbulb.png"))); // NOI18N
+        jMenuItem10.setText("Dicas...");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem10);
+        jMenu2.add(jSeparator1);
+
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/visualizacao/Icones/emotion_wink.png"))); // NOI18N
+        jMenuItem9.setText("Sobre o Sistema");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem9);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 597, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 321, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         java.awt.Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds((screenSize.width-613)/2, (screenSize.height-359)/2, 613, 359);
+        setBounds((screenSize.width-577)/2, (screenSize.height-371)/2, 577, 371);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+        // TODO add your handling code here:
+
+        RelCliente rc = new RelCliente();
+        rc.setVisible(true);
+}//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        // TODO add your handling code here:
+        if(cc == null)
+            cc = new CadCliente();
+
+        cc.setVisible(true);
+}//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        // TODO add your handling code here:
+        RelCliente ec = new RelCliente();
+        ec.setVisible(true);
+}//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        // TODO add your handling code here:
+
+        RelFilme rf = new RelFilme();
+        rf.setVisible(true);
+}//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        // TODO add your handling code here:
+        if(cf == null)
+            cf = new CadFilme();
+
+        cf.setVisible(true);
+}//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+        // TODO add your handling code here:
+
+        RelFilme rf = new RelFilme();
+        rf.setVisible(true);
+}//GEN-LAST:event_jMenuItem25ActionPerformed
+
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        // TODO add your handling code here:
+
+        RelGenero rg = new RelGenero();
+        rg.setVisible(true);
+}//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        // TODO add your handling code here:
+        if(cg == null)
+            cg = new CadGenero();
+
+        cg.setVisible(true);
+}//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        // TODO add your handling code here:
+        RelGenero rg = new RelGenero();
+        rg.setVisible(true);
+}//GEN-LAST:event_jMenuItem28ActionPerformed
+
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        // TODO add your handling code here:
+        RelPromocao rp = new RelPromocao();
+        rp.setVisible(true);
+}//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    private void jMenuItem30ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem30ActionPerformed
+        // TODO add your handling code here:
+        if(cp == null)
+            cp = new CadPromocao();
+
+        cp.setVisible(true);
+}//GEN-LAST:event_jMenuItem30ActionPerformed
+
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        // TODO add your handling code here:
+        RelPromocao rp = new RelPromocao();
+        rp.setVisible(true);
+}//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        // TODO add your handling code here:
+
+        RelLocacao rl = new RelLocacao();
+        rl.setVisible(true);
+}//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+        // TODO add your handling code here:
+        if(cl == null)
+            cl = new CadLocacao();
+
+        cl.setVisible(true);
+}//GEN-LAST:event_jMenuItem33ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        RelLocacao rl = new RelLocacao();
+        rl.setVisible(true);
+}//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+
+        MenuPrincipal.mp.setVisible(true);
+        this.setVisible(false);
+}//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+
+        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja sair do sistema?", "Locaki ~ A Sua Locadora!", 2, 2) == 0)
+            System.exit(0);
+}//GEN-LAST:event_jMenuItem11ActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // TODO add your handling code here:
+
+        ClientesComFilmes ccf = new ClientesComFilmes();
+        ccf.setVisible(true);
+}//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+
+        ClientesMaisAtivos cma = new ClientesMaisAtivos();
+        cma.setVisible(true);
+}//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        ClientesMenosAtivos cma = new ClientesMenosAtivos();
+        cma.setVisible(true);
+}//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+
+        FilmesMaisProcurados fmp = new FilmesMaisProcurados();
+        fmp.setVisible(true);
+}//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+
+        FilmesMenosProcurados fmp = new FilmesMenosProcurados();
+        fmp.setVisible(true);
+}//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+
+        FilmesTopDez ftd = new FilmesTopDez();
+        ftd.setVisible(true);
+}//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+
+        LocacoesDevolucoesAtrasadas lda = new LocacoesDevolucoesAtrasadas();
+        lda.setVisible(true);
+}//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        // TODO add your handling code here:
+
+        LocacoesFilmesDevolvidosHoje lfdh = new LocacoesFilmesDevolvidosHoje();
+        lfdh.setVisible(true);
+}//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+
+        LocacoesTotalLocacoesMes ltlm = new LocacoesTotalLocacoesMes();
+        ltlm.setVisible(true);
+}//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+
+        FinanceiroReceitaPorPeriodo frpp = new FinanceiroReceitaPorPeriodo();
+        frpp.setVisible(true);
+}//GEN-LAST:event_jMenuItem14ActionPerformed
+
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        // TODO add your handling code here:
+
+        FinanceiroReceitaPorFilme frpf = new FinanceiroReceitaPorFilme();
+        frpf.setVisible(true);
+}//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        // TODO add your handling code here:
+
+        FinanceiroReceitaPorGenero frpg = new FinanceiroReceitaPorGenero();
+        frpg.setVisible(true);
+}//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+
+        Dicas d = new Dicas();
+        d.setVisible(true);
+}//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+
+        Sobre s = new Sobre();
+        s.setVisible(true);
+}//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            FilmeCRUD pro = new FilmeCRUD();
+
+            List<Filme> lista = (List<Filme>) pro.buscar(txtBusca.getText());
+
+            DefaultTableModel modelo = (DefaultTableModel) tabelaFilmes.getModel();
+            modelo.setRowCount(0);
+
+            SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+
+            for (Filme f : lista) {
+                modelo.addRow(new Object[]{
+                    f.getIdFilme(),
+                    f.getTitulo(),
+                    f.getUnidades(),
+                    formatador.format(f.getDataCadastro())
+                });
+            }
+        } catch(SQLException e) {
+            JOptionPane.showMessageDialog(this, "Desculpe, ocorreu um erro: \n"  + e.getMessage(), "Locaki ~ A Sua Locadora!", 0);
+        }
+}//GEN-LAST:event_jButton1ActionPerformed
+
+    private void selecionaRegistro(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selecionaRegistro
+        if (evt.getClickCount() == 2)
+            this.abreFormularioEdicao();
+}//GEN-LAST:event_selecionaRegistro
+
+    private void atualizarTabela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_atualizarTabela
+        // TODO add your handling code here:
+
+        this.carregarTabela();
+    }//GEN-LAST:event_atualizarTabela
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        //JOptionPane.showMessageDialog(this, tabelaPromocao.getValueAt(tabelaPromocao.getSelectedRow(), 0), "Locaki ~ A Sua Locadora!", 1);
+        this.abreFormularioEdicao();
+}//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        this.abreFormularioEdicao();
+}//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+
+        if(JOptionPane.showConfirmDialog(this, "Tem certeza que deseja excluir este filme?", "Locaki ~ A Sua Locadora!", 2, 2) == 0) {
+            try {
+                FilmeCRUD fCrud = new FilmeCRUD();
+
+                fCrud.excluir(Integer.parseInt(String.valueOf(tabelaFilmes.getValueAt(tabelaFilmes.getSelectedRow(), 0))));
+
+                JOptionPane.showMessageDialog(this, "Filme Excluído com Sucesso!", "Locaki ~ A Sua Locadora!", 1);
+
+                this.carregarTabela();
+            } catch(SQLException e) {
+                JOptionPane.showMessageDialog(this, "Desculpe, ocorreu um erro: \n "  + e.getMessage(), "Locaki ~ A Sua Locadora!", 0);
+            }
+        }
+}//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
     * @param args the command line arguments
@@ -62,6 +937,8 @@ public class RelFilme extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    javax.swing.JTable tabelaFilmes;
+    javax.swing.JTextField txtBusca;
     // End of variables declaration//GEN-END:variables
 
 }
